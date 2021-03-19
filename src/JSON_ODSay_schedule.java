@@ -34,7 +34,7 @@ public class JSON_ODSay_schedule {
             for (int j = 0; j < 1; j++) {
 
 
-                String urlStr = "https://api.odsay.com/v1/api/subwayTimeTable" + "?" + "apiKey=" + apikey + "&" + "lang=" + lang + "&" + "stationID=" + "222"; // 노선정보
+                String urlStr = "https://api.odsay.com/v1/api/subwayTimeTable" + "?" + "apiKey=" + apikey + "&" + "lang=" + lang + "&" + "stationID=" + stationNo[j]; // 노선정보
 
                 System.out.println("url : " + urlStr);
 
