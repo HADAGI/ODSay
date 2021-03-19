@@ -321,7 +321,7 @@ public class JSON_ODSay_schedule {
                                 System.out.println(w + "번째 정류소ID : " + stopID_data);
 
 
-                                JSONObject BUS_BASE = (JSONObject) BUSSTOP.get(w); // 이시발 좆같은 대괄호 한단계씩 내려갈때마다 JSONObject 선언해주고 array 만들어야됨 ㅅㅂ
+                                JSONObject BUS_BASE = (JSONObject) BUSSTOP.get(w); // 대괄호 한단계씩 내려갈때마다 JSONObject 선언해주고 array 만들어야됨
                                 JSONArray Bus = (JSONArray) BUS_BASE.get("Bus");
 
                                 for (int q = 0; q < Bus.size(); q++) { // 해당 정류소의 버스 개수만큼 돌리기
