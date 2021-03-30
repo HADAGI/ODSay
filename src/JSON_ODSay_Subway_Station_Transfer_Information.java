@@ -19,7 +19,8 @@ public class JSON_ODSay_Subway_Station_Transfer_Information {
 
         try {
 
-            File file = new File("C:\\Users\\jiwon\\Desktop\\지하철\\지하철 고유번호\\서울 지하철 전철코드.txt");
+//            File file = new File("C:\\Users\\jiwon\\Desktop\\지하철\\지하철 고유번호\\서울 지하철 전철코드.txt");
+            File file = new File("C:\\Users\\jiwon\\Desktop\\100~1099.txt");
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String fileline = "";
@@ -31,13 +32,18 @@ public class JSON_ODSay_Subway_Station_Transfer_Information {
             }
             bufferedReader.close();
 
+            String txt1 = "";
+            String txt2 = "";
 
-            for (int j = 0; j < 62; j++) {
 
-                String txt2 = "";
-                String txt5 = "";
+            for (int j = 0; j < 1000; j++) {
 
-                String urlStr = "http://api.odsay.com/v1/api/subwayTransitInfo" + "?" + "apiKey=" + apikey + "&" + "lang=" + lang + "&" + "stationID=" + stationNo[j]; // 노선정보
+
+
+                String urlStr = "https://api.odsay.com/v1/api/subwayTransitInfo" + "?" +
+                        "apiKey=" + apikey + "&" +
+                        "lang=" + lang + "&" +
+                        "stationID=" + stationNo[j]; // 노선정보
 
                 System.out.println("url : " + urlStr);
 
@@ -48,6 +54,9 @@ public class JSON_ODSay_Subway_Station_Transfer_Information {
                 String result = "";
 
                 bf = new BufferedReader(new InputStreamReader(url.openStream()));
+
+                System.out.println("Bf : " + bf);
+
 
                 while ((line = bf.readLine()) != null) {
                     result = result.concat(line);
@@ -67,10 +76,10 @@ public class JSON_ODSay_Subway_Station_Transfer_Information {
                 if (parse_result == null) {
                     System.out.println(stationNo[j] + "해당역은 정보가 없습니다");
 
-                    txt5 += stationNo[j] + "\n";
+                    txt1 += stationNo[j] + "\n";
 
                     FileWriter fileWriter = new FileWriter("C:\\Users\\jiwon\\Desktop\\정보가 없는 역.txt");
-                    fileWriter.write(txt5);
+                    fileWriter.write(txt1);
                     fileWriter.flush();
                     fileWriter.close();
 
@@ -80,63 +89,64 @@ public class JSON_ODSay_Subway_Station_Transfer_Information {
 
                     System.out.println("parse_result : " + parse_result);
 
-                    JSONObject parse_defaultInfo = (JSONObject) parse_result.get("defaultInfo"); // 기본 역 정보
-                    System.out.println("parse_defaultInfo : " + parse_defaultInfo);
 
-                    JSONObject parse_useInfo = (JSONObject) parse_result.get("useInfo"); // 이용정보
-                    System.out.println("parse_useInfo : " + parse_useInfo);
+                    JSONArray transitTotalInfo = (JSONArray) parse_result.get("transitTotalInfo");
+                    System.out.println("transitTotalInfo : " + transitTotalInfo);
 
-                    JSONObject BUS_BASE = (JSONObject) BUSSTOP.get(w); // 대괄호 한단계씩 내려갈때마다 JSONObject 선언해주고 array 만들어야됨
-                    JSONArray Bus = (JSONArray) BUS_BASE.get("Bus");
+                    for (int f = 0; f < transitTotalInfo.size(); f++) {
 
 
-                    txt1 += stationInfo_stationName + "|" +
-                            stationInfo_stationID + "|" +
-                            stationInfo_type + "|" +
-                            stationInfo_laneName + "|" +
-                            stationInfo_citycode + "|" +
-                            stationInfo_x + "|" +
-                            stationInfo_y + "|" +
-                            stationAddress + "|" +
-                            stationNewAddress + "|" +
-                            stationTel + "|" +
-                            station_platform + "|" +
-                            station_meetingPlace + "|" +
-                            station_restroom + "|" +
-                            station_offDoor + "|" +
-                            station_crossOver + "|" +
-                            station_publicPlace + "|" +
-                            station_handicapCount + "|" +
-                            station_parkingCount + "|" +
-                            station_bicycleCount + "|" +
-                            station_civilCount + "|" +
-                            nextOBJ_stationName + "|" +
-                            nextOBJ_stationID + "|" +
-                            nextOBJ_type + "|" +
-                            nextOBJ_laneName + "|" +
-                            nextOBJ_laneCity + "|" +
-                            nextOBJ_x + "|" +
-                            nextOBJ_y + "|" +
-                            prevOBJ_stationName + "|" +
-                            prevOBJ_stationID + "|" +
-                            prevOBJ_type + "|" +
-                            prevOBJ_laneName + "|" +
-                            prevOBJ_laneCity + "|" +
-                            prevOBJ_x + "|" +
-                            prevOBJ_y + "|" +
-                            exOBJ_stationName + "|" +
-                            exOBJ_stationID + "|" +
-                            exOBJ_type + "|" +
-                            exOBJ_laneName + "|" +
-                            exOBJ_laneCity + "\n";
+                        JSONObject transitTotalInfo_data = (JSONObject) transitTotalInfo.get(f); // 한단계씩 내려갈때마다 JSONObject 선언해주고 array 만들어야됨
+                        JSONArray transitTotalInfo_data_real = (JSONArray) transitTotalInfo_data.get("transitTotalInfo");
+
+                        long takeStationID = (long) transitTotalInfo_data.get("takeStationID");
+                        System.out.println("타고온 역 ID : " + takeStationID);
+                        String takeLaneName = (String) transitTotalInfo_data.get("takeLaneName");
+                        System.out.println("타고온 노선명 : " + takeLaneName);
+                        long takeLaneID = (long) transitTotalInfo_data.get("takeLaneID");
+                        System.out.println("타고온 노선 ID : " + takeLaneID);
+                        String takeLaneDirection = (String) transitTotalInfo_data.get("takeLaneDirection");
+                        System.out.println("타고온 노선 방면 : " + takeLaneDirection);
+                        long exStationID = (long) transitTotalInfo_data.get("exStationID");
+                        System.out.println("환승 할 역 ID : " + exStationID);
+                        String exLaneName = (String) transitTotalInfo_data.get("exLaneName");
+                        System.out.println("환승 할 노선명 : " + exLaneName);
+                        long exLaneID = (long) transitTotalInfo_data.get("exLaneID");
+                        System.out.println("환승 할 노선 ID : " + exLaneID);
+                        String exLaneDirection = (String) transitTotalInfo_data.get("exLaneDirection");
+                        System.out.println("환승 할 노선 방면 : " + exLaneDirection);
+                        String fastTrainInfo = (String) transitTotalInfo_data.get("fastTrainInfo");
+                        System.out.println("환승 정보 : " + fastTrainInfo);
+                        long FastTrain = (long) transitTotalInfo_data.get("FastTrain");
+                        System.out.println("빠른환승 열차번호 : " + FastTrain);
+                        long FastFastDoor = (long) transitTotalInfo_data.get("FastFastDoor");
+                        System.out.println("빠른환승 문 번호 : " + FastFastDoor);
+                        long FastTrainNum = (long) transitTotalInfo_data.get("FastTrainNum");
+                        System.out.println("전체 열차 칸 수 : " + FastTrainNum);
+                        System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 
 
-                    FileWriter fw = new FileWriter("C:\\Users\\jiwon\\Desktop\\환승역 지하철 기본 데이터.txt", true);
-                    fw.write(txt2);
-                    fw.flush();
-                    fw.close();
+                        txt2 += takeStationID + "|" +
+                                takeLaneName + "|" +
+                                takeLaneID + "|" +
+                                takeLaneDirection + "|" +
+                                exStationID + "|" +
+                                exLaneName + "|" +
+                                exLaneID + "|" +
+                                exLaneDirection + "|" +
+                                fastTrainInfo + "|" +
+                                FastTrain + "|" +
+                                FastFastDoor + "|" +
+                                FastTrainNum + "\n";
+
+                        FileWriter fileWriter = new FileWriter("C:\\Users\\jiwon\\Desktop\\100~1099지하철 환승 정보.txt");
+                        fileWriter.write(txt2);
+                        fileWriter.flush();
+                        fileWriter.close();
+                    }
 
                 }
+
             }
 
 
