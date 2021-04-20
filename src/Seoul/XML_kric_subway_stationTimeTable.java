@@ -1,3 +1,4 @@
+package Seoul;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,7 +11,7 @@ import java.io.*;
 
 import org.xml.sax.InputSource;
 
-public class XML_Facilities {
+public class XML_kric_subway_stationTimeTable {
 
     // tagname을 가져오고 nodeList에 저장하는 부분
     private static String getTagValue(String tag, Element element) {
@@ -41,7 +42,8 @@ public class XML_Facilities {
 
         try {
 
-            File file = new File("C:\\Users\\jiwon\\Desktop\\1~1000.txt");
+            File file = new File("C:\\Users\\jiwon\\Desktop\\지하철\\서울\\API\\레일포털\\편의시설\\서해선-GM.txt");
+//            File file = new File("C:\\Users\\jiwon\\Desktop\\지하철\\서울\\각종 라인 코드\\경강선 코드.txt");
             FileReader fileReader = new FileReader(file);
             BufferedReader bufreader = new BufferedReader(fileReader);
             String line = "";
@@ -65,7 +67,7 @@ public class XML_Facilities {
                     DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-                    API_XML_Facilities apiExplorer_bus = new API_XML_Facilities();
+                    API_XML_kric_stationTimeTable apiExplorer_bus = new API_XML_kric_stationTimeTable();
                     String data = apiExplorer_bus.getData(busId[j]);     // ApiExplorer_bus 호출
                     Document doc = documentBuilder.parse(new InputSource(new StringReader(data)));  // String을 xml로  parse
 
@@ -88,26 +90,34 @@ public class XML_Facilities {
                             System.out.println("==========================================================");
 
 
-                            // 레일포털 서울지하철 - 편의정보(표준)
-                            System.out.println("gubun : " + getTagValue("gubun", element));
-                            System.out.println("grndDvCd : " + getTagValue("grndDvCd", element));
-                            System.out.println("stinFlor : " + getTagValue("stinFlor", element));
-                            System.out.println("dtlLoc : " + getTagValue("dtlLoc", element));
-                            System.out.println("trfcWeakDvCd : " + getTagValue("trfcWeakDvCd", element));
-                            System.out.println("mlFmlDvCd : " + getTagValue("mlFmlDvCd", element));
+                            // 레일포털 서울지하철 - 역사별 환승정보
+                            System.out.println("도착시각 : " + getTagValue("arvTm", element));
+                            System.out.println("요일코드 : " + getTagValue("dayCd", element));
+                            System.out.println("요일명 : " + getTagValue("dayNm", element));
+                            System.out.println("출발시각 : " + getTagValue("dptTm", element));
+                            System.out.println("선코드 : " + getTagValue("lnCd", element));
+                            System.out.println("시발 역 코드 : " + getTagValue("orgStinCd", element));
+                            System.out.println("철도운영기관코드 : " + getTagValue("railOprIsttCd", element));
+                            System.out.println("종착역코드 : " + getTagValue("tmnStinCd", element));
+                            System.out.println("열차번호 : " + getTagValue("trnNo", element));
 
                             System.out.println("==========================================================");
 
 
-                            String txt = busId[j] + "|" + "|" +
-                                    getTagValue("gubun", element) + "|" +
-                                    getTagValue("grndDvCd", element) + "|" +
-                                    getTagValue("stinFlor", element) + "|" +
-                                    getTagValue("dtlLoc", element) + "|" +
-                                    getTagValue("trfcWeakDvCd", element) + "|" +
-                                    getTagValue("mlFmlDvCd", element) + "\n";
+                            String txt =
+                                    busId[j] + "|" +
+                                            getTagValue("arvTm", element) + "|" +
+                                            getTagValue("dayCd", element) + "|" +
+                                            getTagValue("dayNm", element) + "|" +
+                                            getTagValue("dptTm", element) + "|" +
+                                            getTagValue("lnCd", element) + "|" + "|" +
+                                            getTagValue("orgStinCd", element) + "|" +
+                                            getTagValue("railOprIsttCd", element) + "|" +
+                                            getTagValue("tmnStinCd", element) + "|" +
+                                            getTagValue("trnNo", element) + "\n";
 
-                            FileWriter fw = new FileWriter("C:\\Users\\jiwon\\Desktop\\5호선오금 레일포털 - 서울 지하철 편의시설 정보.txt", true);
+//                            FileWriter fw = new FileWriter("C:\\Users\\jiwon\\Desktop\\1호선-KR 편의시설.txt", true);
+                            FileWriter fw = new FileWriter("C:\\Users\\jiwon\\Desktop\\김포도시철도GM - 평일시간표.txt", true);
                             fw.write(txt);
                             fw.flush();
                             fw.close();

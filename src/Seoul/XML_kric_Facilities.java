@@ -1,3 +1,4 @@
+package Seoul;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -10,7 +11,7 @@ import java.io.*;
 
 import org.xml.sax.InputSource;
 
-public class XML_SubwayINFO {
+public class XML_kric_Facilities {
 
     // tagname을 가져오고 nodeList에 저장하는 부분
     private static String getTagValue(String tag, Element element) {
@@ -41,7 +42,8 @@ public class XML_SubwayINFO {
 
         try {
 
-            File file = new File("C:\\Users\\jiwon\\Desktop\\1~1000.txt");
+            File file = new File("C:\\Users\\jiwon\\Desktop\\지하철\\서울\\API\\레일포털\\편의시설\\1호선-KR.txt");
+//            File file = new File("C:\\Users\\jiwon\\Desktop\\지하철\\서울\\각종 라인 코드\\경강선 코드.txt");
             FileReader fileReader = new FileReader(file);
             BufferedReader bufreader = new BufferedReader(fileReader);
             String line = "";
@@ -58,14 +60,14 @@ public class XML_SubwayINFO {
 //<OpenAPI_ServiceResponse>    <cmmMsgHeader>    <errMsg>SERVICE ERROR</errMsg>    <returnAuthMsg>HTTP_ERROR</returnAuthMsg>     <returnReasonCode>04</returnReasonCode>    </cmmMsgHeader></OpenAPI_ServiceResponse>
 //itemList : http://apis.data.go.kr/6280000/busStationService/getBusStationIdList?serviceKey=Ob7C7H5BU9u4SqoFiGjEJZKZoIPUKQVKqtlEv2HfIxzE5xBzY2qBNZihHiLrnHZfkDWbvgCxpyepaHJoVhdDjQ%3D%3D&pageNo=1&numOfRows=10&bstopId=163000513
 
-            for (int j = 0; j < busId.length; j++) { // 버스번호 범위
+            for (int j = 0; j < 1; j++) { // 버스번호 범위
 
                 while (true) {//http://apis.data.go.kr/6280000/busStationService/getBusStationIdList?serviceKey=%2Feab3wgUxZR46s%2BAthE7A2Aydqs8Uyq6yUXt3XfJQZ55tF%2BdwhlKZ1mjLQOsE%2BEVBhaUhkOUJATDiam35tA6kA%3D%3D&pageNo=1&numOfRows=10&bstopId=101000002
 
                     DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-                    API_XML_SubwayINFO apiExplorer_bus = new API_XML_SubwayINFO();
+                    API_XML_kric_Facilities apiExplorer_bus = new API_XML_kric_Facilities();
                     String data = apiExplorer_bus.getData(busId[j]);     // ApiExplorer_bus 호출
                     Document doc = documentBuilder.parse(new InputSource(new StringReader(data)));  // String을 xml로  parse
 
@@ -77,9 +79,7 @@ public class XML_SubwayINFO {
                     System.out.println("리스트의 수  : " + nodeList.getLength());
 //             버스리스트의 갯수
 
-                    String txt = "";
                     for (int i = 0; i < nodeList.getLength(); i++) {
-
 
                         Node node = nodeList.item(i);
 
@@ -90,40 +90,34 @@ public class XML_SubwayINFO {
                             System.out.println("==========================================================");
 
 
-                            // 서울지하철 - 레일포털 역 정보
-                            System.out.println("stinNm : " + getTagValue("stinNm", element));
-                            System.out.println("stinCd : " + getTagValue("stinCd", element));
-                            System.out.println("railOprIsttCd : " + getTagValue("railOprIsttCd", element));
-                            System.out.println("lnCd : " + getTagValue("lnCd", element));
-                            System.out.println("lonmAdr : " + getTagValue("lonmAdr", element));
-                            System.out.println("stinLocLat : " + getTagValue("stinLocLat", element));
-                            System.out.println("stinLocLon : " + getTagValue("stinLocLon", element));
-                            System.out.println("mapCordX : " + getTagValue("mapCordX", element));
-                            System.out.println("mapCordY : " + getTagValue("mapCordY", element));
-                            System.out.println("strkZone : " + getTagValue("strkZone", element));
+                            // 레일포털 서울지하철 - 편의정보(표준)
+                            System.out.println("gubun : " + getTagValue("gubun", element));
+                            System.out.println("grndDvCd : " + getTagValue("grndDvCd", element));
+                            System.out.println("stinFlor : " + getTagValue("stinFlor", element));
+                            System.out.println("dtlLoc : " + getTagValue("dtlLoc", element));
+                            System.out.println("trfcWeakDvCd : " + getTagValue("trfcWeakDvCd", element));
+                            System.out.println("mlFmlDvCd : " + getTagValue("mlFmlDvCd", element));
 
                             System.out.println("==========================================================");
 
 
-                            // 서울지하철 - 레일포털 역 정보
-                            txt += getTagValue("stinCd", element) + "|" +
-                                    getTagValue("stinNm", element) + "|" +
-                                    getTagValue("railOprIsttCd", element) + "|" +
-                                    getTagValue("lnCd", element) + "|" +
-                                    getTagValue("lonmAdr", element) + "|" +
-                                    getTagValue("roadNmAdr", element) + "|" +
-                                    getTagValue("stinLocLat", element) + "|" +
-                                    getTagValue("stinLocLon", element) + "|" +
-                                    getTagValue("mapCordX", element) + "|" +
-                                    getTagValue("mapCordY", element) + "|" +
-                                    getTagValue("strkZone", element) + "\n";
+                            String txt =
+                                    busId[j] + "|" + "|" + "|" + "|" + "|" + "|" +
+                                    getTagValue("gubun", element) + "|" +
+                                    getTagValue("grndDvCd", element) + "|" +
+                                    getTagValue("stinFlor", element) + "|" +
+                                    getTagValue("dtlLoc", element) + "|" +
+                                    getTagValue("trfcWeakDvCd", element) + "|" +
+                                    getTagValue("mlFmlDvCd", element) + "\n";
+
+//                            FileWriter fw = new FileWriter("C:\\Users\\jiwon\\Desktop\\1호선-KR 편의시설.txt", true);
+                            FileWriter fw = new FileWriter("C:\\Users\\jiwon\\Desktop\\P144-1.txt", true);
+                            fw.write(txt);
+                            fw.flush();
+                            fw.close();
 
                         }
                     }
-                    FileWriter fw = new FileWriter("C:\\Users\\jiwon\\Desktop\\1~1000 - 서울 지하철 정보.txt", true);
-                    fw.write(txt);
-                    fw.flush();
-                    fw.close();
 
                     Thread.currentThread();
                     Thread.sleep(300);

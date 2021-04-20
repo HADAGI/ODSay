@@ -1,3 +1,4 @@
+package Seoul;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -8,15 +9,14 @@ import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 
-public class API_XML_Facilities {
+public class API_XML_kric_stationTransferINFO {
 
     String key = "$2a$10$zvcq7zFImyBXq4.Eh5ffs.Yl/Or.nNqNzaoO9bZD1qI.NQ7TaRJ/e"; // 야닉1
     String format = "xml";
-    String railOprIsttCd = "KR";
-    String lnCd = "K5"; // 호선
+    String railOprIsttCd = "IC";
+    String lnCd = "I2"; // 호선
 
-
-    String url = "http://openapi.kric.go.kr/openapi/handicapped/stationCnvFacl"; // 서울지하철 - 레일포털 편의정보(표준)
+    String url = "http://openapi.kric.go.kr/openapi/convenientInfo/stationTransferInfo"; // 서울지하철 - 레일포털 환승정보(표준)
 
     public String getData(String busId) throws IOException {
         HttpClient client = HttpClientBuilder.create().build();

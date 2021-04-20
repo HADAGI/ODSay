@@ -1,3 +1,4 @@
+package Seoul;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -5,16 +6,18 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.*;
 import java.net.URLEncoder;
+
 import org.apache.http.HttpResponse;
 
-public class API_XML_SubwayINFO {
+public class API_XML_kric_stationStairCarNumber {
 
     String key = "$2a$10$zvcq7zFImyBXq4.Eh5ffs.Yl/Or.nNqNzaoO9bZD1qI.NQ7TaRJ/e"; // 야닉1
     String format = "xml";
-    String railOprIsttCd = "AR";
-    String lnCd = "M1"; // 선코드
+    String railOprIsttCd = "IC";
+    String lnCd = "I2"; // 호선
 
-    String url = "http://openapi.kric.go.kr/openapi/convenientInfo/stationInfo"; // 서울지하철 - 레일포털 역 정보
+
+    String url = "http://openapi.kric.go.kr/openapi/vulnerableUserInfo/stationStairCarNumber"; // 서울지하철 - 레일포털 역사별 인접 계단 차량번호
 
     public String getData(String busId) throws IOException {
         HttpClient client = HttpClientBuilder.create().build();
@@ -22,8 +25,8 @@ public class API_XML_SubwayINFO {
 
         urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + this.key); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("format", "UTF-8") + "=" + URLEncoder.encode(format, "UTF-8")); /*페이지번호*/
-//        urlBuilder.append("&" + URLEncoder.encode("railOprIsttCd", "UTF-8") + "=" + URLEncoder.encode(railOprIsttCd, "UTF-8")); /*한 페이지 결과 수*/
-//        urlBuilder.append("&" + URLEncoder.encode("lnCd", "UTF-8") + "=" + URLEncoder.encode(lnCd, "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("railOprIsttCd", "UTF-8") + "=" + URLEncoder.encode(railOprIsttCd, "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("lnCd", "UTF-8") + "=" + URLEncoder.encode(lnCd, "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("stinCd", "UTF-8") + "=" + URLEncoder.encode(busId, "UTF-8")); /*한 페이지 결과 수*/
 
         HttpGet request = new HttpGet(urlBuilder.toString());
