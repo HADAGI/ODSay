@@ -42,7 +42,7 @@ public class XML_kric_subway_stationTimeTable {
 
         try {
 
-            File file = new File("C:\\Users\\jiwon\\Desktop\\지하철\\서울\\API\\레일포털\\편의시설\\서해선-GM.txt");
+            File file = new File("C:\\Users\\jiwon\\Desktop\\지하철\\수도권\\API\\레일포털\\편의시설\\서해선-SW.txt");
 //            File file = new File("C:\\Users\\jiwon\\Desktop\\지하철\\서울\\각종 라인 코드\\경강선 코드.txt");
             FileReader fileReader = new FileReader(file);
             BufferedReader bufreader = new BufferedReader(fileReader);
@@ -117,7 +117,7 @@ public class XML_kric_subway_stationTimeTable {
                                             getTagValue("trnNo", element) + "\n";
 
 //                            FileWriter fw = new FileWriter("C:\\Users\\jiwon\\Desktop\\1호선-KR 편의시설.txt", true);
-                            FileWriter fw = new FileWriter("C:\\Users\\jiwon\\Desktop\\김포도시철도GM - 평일시간표.txt", true);
+                            FileWriter fw = new FileWriter("C:\\Users\\jiwon\\Desktop\\서해선GM - 평일시간표.txt", true);
                             fw.write(txt);
                             fw.flush();
                             fw.close();

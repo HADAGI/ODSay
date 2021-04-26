@@ -9,15 +9,15 @@ import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 
-public class API_XML_kric_stationTimeTable {
+public class API_XML_kric_stationLostPropertyOffice {
 
     String key = "$2a$10$zvcq7zFImyBXq4.Eh5ffs.Yl/Or.nNqNzaoO9bZD1qI.NQ7TaRJ/e"; // 야닉1
     String format = "xml";
-    String dayCd = "8"; // 8:평일 7:토요일 9:휴일
-    String railOprIsttCd = "SW";
-    String lnCd = "WS"; // 호선
+    String railOprIsttCd = "IC";
+    String lnCd = "I2"; // 호선
 
-    String url = "http://openapi.kric.go.kr/openapi/convenientInfo/stationTimetable"; // 서울지하철 - 레일포털 역사별 운행시각표(표준)
+
+    String url = "http://openapi.kric.go.kr/openapi/convenientInfo/stationLostPropertyOffice"; // 서울지하철 - 레일포털 역사별 유실물센터 정보
 
     public String getData(String busId) throws IOException {
         HttpClient client = HttpClientBuilder.create().build();
@@ -25,7 +25,6 @@ public class API_XML_kric_stationTimeTable {
 
         urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=" + this.key); /*Service Key*/
         urlBuilder.append("&" + URLEncoder.encode("format", "UTF-8") + "=" + URLEncoder.encode(format, "UTF-8")); /*페이지번호*/
-        urlBuilder.append("&" + URLEncoder.encode("dayCd", "UTF-8") + "=" + URLEncoder.encode(dayCd, "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("railOprIsttCd", "UTF-8") + "=" + URLEncoder.encode(railOprIsttCd, "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("lnCd", "UTF-8") + "=" + URLEncoder.encode(lnCd, "UTF-8")); /*한 페이지 결과 수*/
         urlBuilder.append("&" + URLEncoder.encode("stinCd", "UTF-8") + "=" + URLEncoder.encode(busId, "UTF-8")); /*한 페이지 결과 수*/
